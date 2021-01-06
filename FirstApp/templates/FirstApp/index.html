@@ -1,0 +1,57 @@
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title>Chat Rooms</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
+<body>
+    
+    <div class="container col-6 col-md-6 col-sm-12">
+        <h2 style="justify-content: center;display: flex;">Welcome {{user.username}}  Create Room</h2>
+        <a href="logout/" style="display: flex;justify-content: right;"><button class="btn btn-danger">Logout</button></a>
+        <form action='/create_room/' method="POST">{% csrf_token %}
+            <div class="form-group">
+              <label for="exampleFormControlInput1">Room Name</label>
+              <input type="text" class="form-control" name="name" id="exampleFormControlInput1" >
+            </div>
+            <div class="form-group">
+                <label for="exampleFormControlSelect2">Members</label>
+                <select multiple class="form-control" name="members" id="exampleFormControlSelect2">
+                  {% for user1 in users%}
+                  {% if user1.first_name  %}
+                  <option value="{{user1.id}}">{{user1.first_name}}   {{user1.last_name}}</option>
+                  {% endif %}
+                  {% endfor %}
+                 
+                </select>
+              </div>
+           
+            <div class="form-group">
+              <label for="exampleFormControlTextarea1">Description</label>
+              <textarea class="form-control" id="exampleFormControlTextarea1" name="description" rows="3"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </form>
+
+
+          
+    </div>
+    <div class="container col-6 col-md-6 col-sm-12">
+        <h2>Available Rooms</h2>
+        <ul class="list-group">
+
+            {% for room in rooms%}
+            <li class="list-group-item {% if forloop.counter == 1%} active {% endif %}"><a href="FirstApp/{{room.name}}/" style="text-decoration: none;{% if forloop.counter == 1%}color:Yellow{% else %} color:black {% endif %};font-weight: bold;">{{room.name}}</a></li>
+            {% endfor %}
+          </ul>
+
+    </div>
+    
+
+    
+   
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</body>
+</html>
